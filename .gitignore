@@ -1,0 +1,7 @@
+*~
+*.sublime-workspace
+*.pyc
+*.pyo
+*.DS_Store
+lfs_shipping_zzr.egg-info/
+.codeintel/

@@ -152,7 +152,10 @@ class ZZRPriceCalculator(ShippingMethodPriceCalculator):
         zip_code = ship_address.zip_code
 
         #Lookup the zone based on the ZIP Code and weight
-        zone = get_zone(int(zip_code))
+        if zip_code:
+            zone = get_zone(int(zip_code))
+        else:
+            zone = 8
         cart = get_cart(self.request)
         weight = reduce(lambda l: l.weight * l.amount, cart.get_items())
         return get_price(zone, weight)

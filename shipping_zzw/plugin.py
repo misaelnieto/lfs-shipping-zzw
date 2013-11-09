@@ -157,7 +157,7 @@ class ZZRPriceCalculator(ShippingMethodPriceCalculator):
         else:
             zone = 8
         cart = get_cart(self.request)
-        weight = reduce(lambda x, y: x + y.weight * y.amount, cart.get_items())
+        weight = reduce(lambda x, y: x + y.item.weight * y.item.amount, cart.get_items())
         return get_price(zone, weight)
 
     def get_price_net(self):

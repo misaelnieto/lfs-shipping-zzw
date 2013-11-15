@@ -148,7 +148,7 @@ class ZZRPriceCalculator(ShippingMethodPriceCalculator):
     def _compute_price(self):
         #Get the zip_code
         customer = get_customer(self.request)
-        ship_address = customer.get_selected_shipping_address()
+        ship_address = customer.selected_shipping_address
         zip_code = ship_address.zip_code
 
         #Lookup the zone based on the ZIP Code and weight
@@ -160,18 +160,20 @@ class ZZRPriceCalculator(ShippingMethodPriceCalculator):
         weight = 0
         for item in cart.get_items():
             weight += item.product.weight * item.amount
-        self._price = get_price(zone, weight)
+        return get_price(zone, weight)
 
     def get_price_net(self):
         """
         Returns the net price of the shipping method.
         """
-        return self.get_price_gross()
+        return self._compute_price()
+        # return self.get_price_gross()
 
     def get_price_gross(self):
         """
         Returns the gross price of the shipping method.
         """
-        if self._price is None:
-            self._compute_price()
-        return self._price
+        return self._compute_price()
+        # if self._price is None:
+        #     self._compute_price()
+        # return self._price
